@@ -1,1 +1,1 @@
-alert("Hola Mundo");
+alert("Esta página no tiene ninguna utilidad");
