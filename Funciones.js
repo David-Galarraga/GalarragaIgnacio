@@ -1,1 +1,4 @@
-alert("Esta página no tiene ninguna utilidad");
+let botonPrender = document.getElementById("BotonPrender")
+botonPrender.onclick = function(){
+   botonPrender.classList.toggle("red")
+}
