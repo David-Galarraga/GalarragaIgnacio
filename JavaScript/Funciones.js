@@ -1,7 +1,4 @@
-let botonPrender = document.getElementById("BotonPrender") //Llamar a un elemento por su ID
-let botonApagar = document.getElementById("botonaPagar")
-let imagenGato = document.getElementById("gatoImagen")
-
+const miImagen = document.querySelector("img");
 
 let persona1 = {                                 //objeto              
     nombre : "David",
@@ -19,8 +16,6 @@ let persona2 = {                                 //objeto
     colores: ["blanco","azul","rojo"]
 }
 
-
-
 function comparar (persona1,persona2){          //Función
     const p1Azul = persona1.colores.includes("azul")        //Constantes
     const p2Azul = persona2.colores.includes("azul")
@@ -37,11 +32,11 @@ function comparar (persona1,persona2){          //Función
 
 console.log(comparar(persona1,persona2)); 
 
-
-botonPrender.onclick = function(){
-    imagenGato.src="./Imagenes/img_GatitoEncendido.png"
-}
-botonApagar.onclick = function(){
-    imagenGato.src="./Imagenes/img_Gatito.png"
-}
-
+miImagen.addEventListener("click", () => {
+    const miSrc = miImagen.getAttribute("src");
+    if (miSrc === "Imagenes/img_Gatito.png") {
+        miImagen.setAttribute("src", "Imagenes/img_GatitoEncendido.png");
+    } else {
+        miImagen.setAttribute("src", "Imagenes/img_Gatito.png");
+    }
+});
