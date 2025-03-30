@@ -1,4 +1,13 @@
-const miImagen = document.querySelector("img");
+const miImagen = document.getElementById("gatoImagen");
+
+miImagen.addEventListener("click", () => {
+    const miSrc = miImagen.getAttribute("src");
+    if (miSrc === "Imagenes/img_Gatito.png") {
+        miImagen.setAttribute("src", "Imagenes/img_GatitoEncendido.png");
+    } else {
+        miImagen.setAttribute("src", "Imagenes/img_Gatito.png");
+    }
+});
 
 let persona1 = {                                 //objeto              
     nombre : "David",
@@ -31,12 +40,3 @@ function comparar (persona1,persona2){          //Función
 }
 
 console.log(comparar(persona1,persona2)); 
-
-miImagen.addEventListener("click", () => {
-    const miSrc = miImagen.getAttribute("src");
-    if (miSrc === "Imagenes/img_Gatito.png") {
-        miImagen.setAttribute("src", "Imagenes/img_GatitoEncendido.png");
-    } else {
-        miImagen.setAttribute("src", "Imagenes/img_Gatito.png");
-    }
-});
