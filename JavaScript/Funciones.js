@@ -1,4 +1,4 @@
-let botonPrender = document.getElementById("BotonPrender")
+let botonPrender = document.getElementById("BotonPrender") //Llamar a un elemento por su ID
 let botonApagar = document.getElementById("botonaPagar")
 let imagenGato = document.getElementById("gatoImagen")
 
@@ -8,7 +8,7 @@ let persona1 = {                                 //objeto
     apellido : "Galarraga",
     dni: "45201414",
     edad : 29,
-    colores: ["blanco","azul","rojo"]
+    colores: ["blanco","azul","rojo"]           //vactor dentro de un objeto
 }
 
 let persona2 = {                                 //objeto              
@@ -21,8 +21,8 @@ let persona2 = {                                 //objeto
 
 
 
-function comparar (persona1,persona2){
-    const p1Azul = persona1.colores.includes("azul")
+function comparar (persona1,persona2){          //Función
+    const p1Azul = persona1.colores.includes("azul")        //Constantes
     const p2Azul = persona2.colores.includes("azul")
     if ( p1Azul && p2Azul ){
         console.log(persona1.nombre," y ",persona2.nombre, " tienen azul")
