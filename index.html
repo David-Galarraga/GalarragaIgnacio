@@ -7,14 +7,23 @@
   <link rel="shortcut icon" href="Imagenes\favicon.ico" type="image/x-icon">
   <title>Prueba</title>
 </head>
-<body>
+<body id="bodyApagado">
   <div id="encabezado">
     <h1>Intento de página</h1> 
   </div>   
   <br> 
-  <p>Clickea al gato para encender/apagar!</p>
+  <p>Clickea en la imagen para encender/apagar!</p>
   <br>
+  <p id="nombreGato">gato</p>
   <img src="Imagenes\img_Gatito.png" alt="Imagen de gatito" width="200" height="200" id="gatoImagen">
+  <br>
+  <p>Presione el boton para cambiar el nombre del gato</p>
+  <br>
+  <button id="cambiarNombreGato">Cambiar Nombre</button>
+  <br>
+  <div id="zonaBotones">
+    <button class="button"> <a href="sobreMi.html">Sobre Mi</a></button>
+  </div>
 </body>
 </html>
 <script src="JavaScript\Funciones.js"></script>

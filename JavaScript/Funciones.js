@@ -1,11 +1,29 @@
 const miImagen = document.getElementById("gatoImagen");
+const miBody = document.getElementById("bodyApagado");
+
+const botonNombreGato = document.getElementById("cambiarNombreGato");
+const nombreG = document.getElementById("nombreGato");
+
+if (localStorage.getItem("nombreGato")){
+    nombreG.innerText = localStorage.getItem("nombreGato");
+}
+botonNombreGato.addEventListener("click", () =>{
+    const nuevoNombre = prompt ("Ingrese nuevo nombre");
+    if (!nuevoNombre){
+        return
+    }
+    nombreG.innerText = nuevoNombre;
+    localStorage.setItem("nombreGato", nuevoNombre);
+})
 
 miImagen.addEventListener("click", () => {
     const miSrc = miImagen.getAttribute("src");
     if (miSrc === "Imagenes/img_Gatito.png") {
         miImagen.setAttribute("src", "Imagenes/img_GatitoEncendido.png");
+        miBody.setAttribute("id", "bodyPrendido");
     } else {
         miImagen.setAttribute("src", "Imagenes/img_Gatito.png");
+        miBody.setAttribute("id", "bodyApagado");
     }
 });
 
