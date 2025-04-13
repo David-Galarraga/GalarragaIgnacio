@@ -131,7 +131,37 @@ function getFilterByGender(result){
 
 //Mostrar todos los personajes que coincidan con esa ubicación
 function getSearchByLocations(result) {
+    let locationNames = []
+    let characterNames = []
+    let allLocations = []
+    result.forEach(characterLocations => {
+        allLocations.push(characterLocations.location.name)
+        if (!locationNames.includes(characterLocations.location.name)) {
+            locationNames.push(characterLocations.location.name);
+        }
+        if (!characterNames.includes(characterLocations.name)) {
+            characterNames.push(characterLocations.name)
+        }
+    });
+
+    let select = document.getElementById("ubicacion");
+    locationNames.forEach(nombre => {
+        const opcion = document.createElement("option"); //Se esta creando un nuevo elemento para el DOM
+        opcion.value = nombre;  //con .value se le esta asignando su valor
+        opcion.textContent = nombre;    // con .textContent se le esta dando el contenido 
+        select.appendChild(opcion);
+      });
+
+    let boton = document.getElementById("buscar");
     
+    boton.onclick = function(){
+        console.log("PERSONAJES POR UBICACION:")
+        for (let index = 0; index < result.length; index++) {
+            if (select.value === allLocations[index]) {
+                console.log(characterNames[index]);
+            }  
+        }
+    }
 }
 
 
