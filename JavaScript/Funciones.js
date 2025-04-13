@@ -1,200 +1,177 @@
-const miImagen = document.getElementById("gatoImagen");
-const miBody = document.getElementById("bodyApagado");
+let urlRickAndMorty = 'https://rickandmortyapi.com/api/character';
+let countCharacters = [];
+let speciesAnalysis = [];
+let mostPopularCharacter = [];
+let filterByGender = [];
+let searchByLocations = [];
 
-const botonNombreGato = document.getElementById("cambiarNombreGato");
-const nombreG = document.getElementById("nombreGato");
-
-if (localStorage.getItem("nombreGato")){
-    nombreG.innerText = localStorage.getItem("nombreGato");
+function getCharacters(){
+    fetch(urlRickAndMorty)
+    .then(response => response.json())
+    .then(data =>{
+        result = data.results;
+        countCharacters = getCountCharacters(result);
+        speciesAnalysis = getSpeciesAnalysis(result);
+        mostPopularCharacter = getMostPopularCharacter(result);
+        filterByGender = getFilterByGender(result);
+        searchByLocations = getSearchByLocations(result);
+    })
 }
-botonNombreGato.addEventListener("click", () =>{
-    const nuevoNombre = prompt ("Ingrese nuevo nombre");
-    if (!nuevoNombre){
-        return
+
+function getCountCharacters(result){
+    let cantCharacters= result.length
+    let cantcharactersAlive=0
+
+    result.forEach(characterAlive => {
+        if (characterAlive.status == "Alive") {
+            cantcharactersAlive ++
+        }
+    });
+    console.log("CONTEO DE PERSONAJES:");
+    console.log(`Cantidad de personajes: ${cantCharacters}`);
+    console.log(`Personajes vivos: ${cantcharactersAlive}`);
+}
+
+//Identificar cuántas especies diferentes hay
+//Mostrar cuál es la especie más común
+function getSpeciesAnalysis(result){
+    let species = []
+    let aux=0
+    let cantCommonSpecies=[]
+
+    result.forEach(character => {
+        if(!species.includes(character.species)){
+            species.push(character.species)
+        } 
+    })
+
+    species.forEach(specie => {
+        cantCommonSpecies.push(0);
+        for (let index = 0; index < result.length; index++) {
+            if (result[index].species === specie) {
+                cantCommonSpecies[aux] ++
+            }
+        }
+        aux ++
+    });
+
+    const mayorSpecies = cantCommonSpecies.reduce(
+        (firstValue, secondValue) => firstValue > secondValue ? 
+        cantCommonSpecies.indexOf(firstValue) : cantCommonSpecies.indexOf(secondValue)
+    );
+    console.log("ANALISIS DE ESPECIES");
+    console.log(`Cantidad de especies: ${species.length}`);
+    console.log(`Especie dominante: ${species[mayorSpecies]}`);
+
+}
+
+
+//Encontrar al personaje que ha aparecido en más episodios (mayor valor en episode.length)
+//Mostrar su nombre, imagen y número de episodios
+function getMostPopularCharacter(result){
+    let cantEpisodesPerCharacter = [];
+
+    result.forEach(character => {
+        let episodeLength = character.episode;
+        if (!cantEpisodesPerCharacter.includes(episodeLength)) {
+            cantEpisodesPerCharacter.push(episodeLength.length);
+        }
+    });
+
+    const populars = cantEpisodesPerCharacter.reduce((acum, value, index) => {
+    if (value > acum.max) {
+    // Nuevo máximo encontrado, reiniciar array de índices
+    return { max: value, indices: [index] };
+    // a acum.max se le da un nuevo valor
+    // se reinicia el arreglo indices con el indice actual
+    } else if (value === acum.max) {
+    // Mismo máximo, agregar índice
+    acum.indices.push(index);
     }
-    nombreG.innerText = nuevoNombre;
-    localStorage.setItem("nombreGato", nuevoNombre);
-})
+    return acum;
+    }, { max: -Infinity, indices: [] }); 
+    // maz es -infinity para asegurar que todos los numeros lo superen a la primera
+    // indices [] es un arreglo vacio para despues hacerle push
 
-miImagen.addEventListener("click", () => {
-    const miSrc = miImagen.getAttribute("src");
-    if (miSrc === "Imagenes/img_Gatito.png") {
-        miImagen.setAttribute("src", "Imagenes/img_GatitoEncendido.png");
-        miBody.setAttribute("id", "bodyPrendido");
-    } else {
-        miImagen.setAttribute("src", "Imagenes/img_Gatito.png");
-        miBody.setAttribute("id", "bodyApagado");
-    }
-});
-
-let persona1 = {                                 //objeto              
-    nombre : "David",
-    apellido : "Galarraga",
-    dni: "45201414",
-    edad : 29,
-    colores: ["blanco","aa","rojo"]           //vactor dentro de un objeto
-}
-
-let persona2 = {                                 //objeto              
-    nombre : "Juan",
-    apellido : "Galarraga",
-    dni: "46201414",
-    edad : 30,
-    colores: ["blanco","azul","rojo"]
-}
-
-function comparar (persona1,persona2){                      //Función
-    const p1Azul = persona1.colores.includes("azul")        //Constantes
-    const p2Azul = persona2.colores.includes("azul")
-    if ( p1Azul && p2Azul ){
-        console.log(persona1.nombre," y ",persona2.nombre, " tienen azul")
-    } else if (p1Azul) {
-        console.log(persona1.nombre, " tiene azul")
-    } else if (p2Azul) {
-        console.log(persona2.nombre, " tiene azul")
-    } else if (!p1Azul && !p2Azul) {
-        console.log(persona1.nombre," y ",persona2.nombre, " no tienen azul")
+    console.log("PERSONAJE MAS POPULAR:");
+    console.log("Los/El personaje/s mas popular/es son/es:");
+    for (let index = 0; index < result.length; index++) {
+        if (populars.indices.includes(index)) {
+                console.log(`Nombre: ${result[index].name}`);
+                console.log(`Cantidad de espisodios: ${populars.max}`);
+                console.log(`Imagen: ${result[index].image}`);
+        }
     }
 }
 
-console.log(comparar(persona1,persona2)); 
-
-let colorcitos = ["azul", "banana","verde"];
-colorcitos.push("gris");                    //Push agrega un valor al final
-colorcitos.unshift("negro");                //unshift agrega un valor al inicio
-console.log(colorcitos);
-
-// Cual de las dos cajas tiene la mayor cantidad
-
-let caja1={
-    color: "azul",
-    altura: 10,
-    peso: 10,
-    cantidad: [10,2,3,4,5]
+//Crear dos listas separadas: personajes masculinos y femeninos
+//Mostrar el recuento de cada género
+function getFilterByGender(result){
+    let cantMasculine = 0
+    let cantFemenine = 0
+    let cantUnkmown = 0
+    result.forEach(gender => {
+        if (gender.gender.includes("Male")) {
+            cantMasculine ++
+        } else if (gender.gender.includes("Female")){
+            cantFemenine ++
+        }
+        else if (gender.gender.includes("unknown")){
+            cantUnkmown ++
+        }
+    });
+    console.log("FILTRADO POR GENERO");
+    console.log(`Masculinos: ${cantMasculine}`);
+    console.log(`Femeninos: ${cantFemenine}`);
+    console.log(`Desconocidos: ${cantUnkmown}`);
 }
-let caja2={
-    color: "azul",
-    altura: 10,
-    peso: 10,
-    cantidad: [2,3,4,5,6]
+
+
+//Permitir al usuario ingresar una ubicación (location.name)
+
+//Mostrar todos los personajes que coincidan con esa ubicación
+function getSearchByLocations(result) {
+    
 }
 
-function mayor(caja1,caja2) {
-    let cantNum1=0;
-    let cantNum2=0;
-    let i=0;
 
-    do {
-        cantNum1= cantNum1 + caja1.cantidad[i];
-        i= i +1;
-    } while (i < 5);
-    console.log("caja 1 tiene: ", cantNum1);
+getCharacters();;
 
-    i=0;
+/*
+let urlPokemon = 'https://pokeapi.co/api/v2/pokemon';
 
-    do {
-        cantNum2= cantNum2 + caja2.cantidad[i];
-        i= i +1;
-    } while (i < 5);
-    console.log("caja 2 tiene: ", cantNum2);
-
-    if (cantNum1 > cantNum2){
-        console.log("caja 1 es mayor con: ",cantNum1,", caja 2 tiene: ",cantNum2);
-    }else{
-        console.log("caja 2 es mayor con: ",cantNum2,", caja 1 tiene: ",cantNum2);
-    }
+function consulNombres(){
+    fetch(urlPokemon)
+    .then(respuesta => respuesta.json())
+    .then(datos => {
+        const pokemonNames = datos.results
+        pokemonNames.forEach(pokeName => {
+            console.log(pokeName.name)
+        })
+    })
 }
-console.log(mayor(caja1,caja2));
 
-//Vamos a usar una api, que personaje aparece en mas episodios
-let personaje1 = {
-    id:1,
-    name:"Rick Sanchez",
-    status:"Alive",
-    species:"Human",
-    type:"",
-    gender:"Male",
-    origin:{"name":"Earth (C-137)",
-    url:"https://rickandmortyapi.com/api/location/1"},
-    location:{"name":"Citadel of Ricks","url":"https://rickandmortyapi.com/api/location/3"},
-    image:"https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-    episode:["https://rickandmortyapi.com/api/episode/1","https://rickandmortyapi.com/api/episode/2","https://rickandmortyapi.com/api/episode/3","https://rickandmortyapi.com/api/episode/4","https://rickandmortyapi.com/api/episode/5","https://rickandmortyapi.com/api/episode/6","https://rickandmortyapi.com/api/episode/7","https://rickandmortyapi.com/api/episode/8","https://rickandmortyapi.com/api/episode/9","https://rickandmortyapi.com/api/episode/10","https://rickandmortyapi.com/api/episode/11","https://rickandmortyapi.com/api/episode/12","https://rickandmortyapi.com/api/episode/13","https://rickandmortyapi.com/api/episode/14","https://rickandmortyapi.com/api/episode/15","https://rickandmortyapi.com/api/episode/16","https://rickandmortyapi.com/api/episode/17","https://rickandmortyapi.com/api/episode/18","https://rickandmortyapi.com/api/episode/19","https://rickandmortyapi.com/api/episode/20","https://rickandmortyapi.com/api/episode/21","https://rickandmortyapi.com/api/episode/22","https://rickandmortyapi.com/api/episode/23","https://rickandmortyapi.com/api/episode/24","https://rickandmortyapi.com/api/episode/25","https://rickandmortyapi.com/api/episode/26","https://rickandmortyapi.com/api/episode/27","https://rickandmortyapi.com/api/episode/28","https://rickandmortyapi.com/api/episode/29","https://rickandmortyapi.com/api/episode/30","https://rickandmortyapi.com/api/episode/31","https://rickandmortyapi.com/api/episode/32","https://rickandmortyapi.com/api/episode/33","https://rickandmortyapi.com/api/episode/34","https://rickandmortyapi.com/api/episode/35","https://rickandmortyapi.com/api/episode/36","https://rickandmortyapi.com/api/episode/37","https://rickandmortyapi.com/api/episode/38","https://rickandmortyapi.com/api/episode/39","https://rickandmortyapi.com/api/episode/40","https://rickandmortyapi.com/api/episode/41","https://rickandmortyapi.com/api/episode/42","https://rickandmortyapi.com/api/episode/43","https://rickandmortyapi.com/api/episode/44","https://rickandmortyapi.com/api/episode/45","https://rickandmortyapi.com/api/episode/46","https://rickandmortyapi.com/api/episode/47","https://rickandmortyapi.com/api/episode/48","https://rickandmortyapi.com/api/episode/49","https://rickandmortyapi.com/api/episode/50","https://rickandmortyapi.com/api/episode/51"],"url":"https://rickandmortyapi.com/api/character/1",
-    created:"2017-11-04T18:48:46.250Z"}
-    console.log(personaje1);
+function consulImpar(){
+    fetch("https://pokeapi.co/api/v2/pokemon/?limit=40")
+    .then(respuesta2 => respuesta2.json())
+    .then(datos2 => {
+        const PokemonDatos = datos2.results
+        for (let i = 0; i < PokemonDatos.length; i++) {
+            if (i % 2 == 0 ) {
+                console.log(PokemonDatos[i])
+            }
+        }
+    })
+}
 
-let personaje2 = {
-    "id": 3,
-    "name": "Summer Smith",
-    "status": "Alive",
-    "species": "Human",
-    "type": "",
-    "gender": "Female",
-    "origin": {
-      "name": "Earth (Replacement Dimension)",
-      "url": "https://rickandmortyapi.com/api/location/20"
-    },
-    "location": {
-      "name": "Earth (Replacement Dimension)",
-      "url": "https://rickandmortyapi.com/api/location/20"
-    },
-    "image": "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
-    "episode": [
-      "https://rickandmortyapi.com/api/episode/6",
-      "https://rickandmortyapi.com/api/episode/7",
-      "https://rickandmortyapi.com/api/episode/8",
-      "https://rickandmortyapi.com/api/episode/9",
-      "https://rickandmortyapi.com/api/episode/10",
-      "https://rickandmortyapi.com/api/episode/11",
-      "https://rickandmortyapi.com/api/episode/12",
-      "https://rickandmortyapi.com/api/episode/14",
-      "https://rickandmortyapi.com/api/episode/15",
-      "https://rickandmortyapi.com/api/episode/16",
-      "https://rickandmortyapi.com/api/episode/17",
-      "https://rickandmortyapi.com/api/episode/18",
-      "https://rickandmortyapi.com/api/episode/19",
-      "https://rickandmortyapi.com/api/episode/20",
-      "https://rickandmortyapi.com/api/episode/21",
-      "https://rickandmortyapi.com/api/episode/22",
-      "https://rickandmortyapi.com/api/episode/23",
-      "https://rickandmortyapi.com/api/episode/24",
-      "https://rickandmortyapi.com/api/episode/25",
-      "https://rickandmortyapi.com/api/episode/26",
-      "https://rickandmortyapi.com/api/episode/27",
-      "https://rickandmortyapi.com/api/episode/29",
-      "https://rickandmortyapi.com/api/episode/30",
-      "https://rickandmortyapi.com/api/episode/31",
-      "https://rickandmortyapi.com/api/episode/32",
-      "https://rickandmortyapi.com/api/episode/33",
-      "https://rickandmortyapi.com/api/episode/34",
-      "https://rickandmortyapi.com/api/episode/35",
-      "https://rickandmortyapi.com/api/episode/36",
-      "https://rickandmortyapi.com/api/episode/38",
-      "https://rickandmortyapi.com/api/episode/39",
-      "https://rickandmortyapi.com/api/episode/40",
-      "https://rickandmortyapi.com/api/episode/41",
-      "https://rickandmortyapi.com/api/episode/42",
-      "https://rickandmortyapi.com/api/episode/43",
-      "https://rickandmortyapi.com/api/episode/44",
-      "https://rickandmortyapi.com/api/episode/45",
-      "https://rickandmortyapi.com/api/episode/46",
-      "https://rickandmortyapi.com/api/episode/47",
-      "https://rickandmortyapi.com/api/episode/48",
-      "https://rickandmortyapi.com/api/episode/49",
-      "https://rickandmortyapi.com/api/episode/51"
-    ],
-    "url": "https://rickandmortyapi.com/api/character/3",
-    "created": "2017-11-04T19:09:56.428Z"
-  }
-  console.log(personaje2);
-
-  function masEpisodios (personaje1,personaje2){
-    const episodiosCant = personaje1.episode.length;
-    const episodiosCant2 = personaje2.episode.length;
-
-    if (episodiosCant > episodiosCant2){
-        console.log("El personaje " + personaje1.name+" tiene mas apariciones con: ",episodiosCant,",que "+personaje2.name+", el cual tiene: ",episodiosCant2);
-    }else{
-        console.log("El personaje " + personaje2.name+"tiene mas apariciones con: ",episodiosCant2,", que "+personaje1.name+" el cual tiene: ",episodiosCant);
-    }
-  }
-  console.log(masEpisodios(personaje1,personaje2))
+function consulDitto(){
+    urlPokemon += "/ditto"
+    fetch(urlPokemon)
+    .then(respuestaDitto => respuestaDitto.json())
+    .then(datosDitto => {
+        const dittoStats = datosDitto.stats
+        console.log(dittoStats[1], dittoStats[2])
+    })
+}
+consulDitto();
+*/
