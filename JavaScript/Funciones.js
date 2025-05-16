@@ -1,4 +1,5 @@
-let urlRickAndMorty = 'https://rickandmortyapi.com/api/character';
+
+/*let urlRickAndMorty = 'https://rickandmortyapi.com/api/character';
 let countCharacters = [];
 let speciesAnalysis = [];
 let mostPopularCharacter = [];
@@ -164,11 +165,9 @@ function getSearchByLocations(result) {
     }
 }
 
-
-getCharacters();;
-
-/*
-let urlPokemon = 'https://pokeapi.co/api/v2/pokemon';
+getCharacters();
+*/
+let urlPokemon = 'https://pokeapi.co/api/v2/pokemon/character/';
 
 function consulNombres(){
     fetch(urlPokemon)
@@ -181,27 +180,26 @@ function consulNombres(){
     })
 }
 
-function consulImpar(){
-    fetch("https://pokeapi.co/api/v2/pokemon/?limit=40")
+function getPersonaje(){
+    
+    let pokemon1 = document.getElementById("id_pokemon")
+    let pokemon2 = document.getElementById("id_pokemon2")
+    let nombres= "";
+    fetch("https://rickandmortyapi.com/api/character/"+pokemon1.value)
     .then(respuesta2 => respuesta2.json())
     .then(datos2 => {
-        const PokemonDatos = datos2.results
-        for (let i = 0; i < PokemonDatos.length; i++) {
-            if (i % 2 == 0 ) {
-                console.log(PokemonDatos[i])
-            }
-        }
-    })
-}
+        const resultados = datos2.name
+        const mostrarNombre1 = document.getElementById("nombre_pokemon")
+        nombres+= resultados +", "; 
+        mostrarNombre1.innerHTML=nombres
+        })
 
-function consulDitto(){
-    urlPokemon += "/ditto"
-    fetch(urlPokemon)
-    .then(respuestaDitto => respuestaDitto.json())
-    .then(datosDitto => {
-        const dittoStats = datosDitto.stats
-        console.log(dittoStats[1], dittoStats[2])
-    })
-}
-consulDitto();
-*/
+    fetch("https://rickandmortyapi.com/api/character/"+pokemon2.value)
+    .then(respuesta2 => respuesta2.json())
+    .then(datos2 => {
+        const resultados = datos2.name
+        const mostrarNombre1 = document.getElementById("nombre_pokemon")
+        nombres+= resultados; 
+        mostrarNombre1.innerHTML=nombres
+        })
+    }
