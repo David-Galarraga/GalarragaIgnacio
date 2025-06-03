@@ -1,205 +1,119 @@
+let urlPokemon = 'https://pokeapi.co/api/v2/pokemon/';
+let pokemonID = []; //arrays vacios para funciones e Ids de pokemons
+let showPokemons = [];
+let showStats = [];
+let pokeCombat = [];
+let aTeamAttack = 0;    //variables globales para ataque y defensa de cada equipo
+let bTeamAttack = 0;
+let aTeamDefense = 0;
+let bTeamDefense = 0;
+const botonCombatir = document.getElementById("boton_combatir");    //variables para obtener IDs de partes de HTML
+const mostrarPokemon = document.getElementById("mostrar_pokemon");
+const mostrarStats = document.getElementById("mostrar_stats");
+const mostrarGanador = document.getElementById("mostrar_ganador");
 
-/*let urlRickAndMorty = 'https://rickandmortyapi.com/api/character';
-let countCharacters = [];
-let speciesAnalysis = [];
-let mostPopularCharacter = [];
-let filterByGender = [];
-let searchByLocations = [];
-
-function getCharacters(){
-    fetch(urlRickAndMorty)
-    .then(response => response.json())
-    .then(data =>{
-        result = data.results;
-        countCharacters = getCountCharacters(result);
-        speciesAnalysis = getSpeciesAnalysis(result);
-        mostPopularCharacter = getMostPopularCharacter(result);
-        filterByGender = getFilterByGender(result);
-        searchByLocations = getSearchByLocations(result);
-    })
-}
-
-function getCountCharacters(result){
-    let cantCharacters= result.length
-    let cantcharactersAlive=0
-
-    result.forEach(characterAlive => {
-        if (characterAlive.status == "Alive") {
-            cantcharactersAlive ++
-        }
-    });
-    console.log("CONTEO DE PERSONAJES:");
-    console.log(`Cantidad de personajes: ${cantCharacters}`);
-    console.log(`Personajes vivos: ${cantcharactersAlive}`);
-}
-
-//Identificar cuántas especies diferentes hay
-//Mostrar cuál es la especie más común
-function getSpeciesAnalysis(result){
-    let species = []
-    let aux=0
-    let cantCommonSpecies=[]
-
-    result.forEach(character => {
-        if(!species.includes(character.species)){
-            species.push(character.species)
-        } 
-    })
-
-    species.forEach(specie => {
-        cantCommonSpecies.push(0);
-        for (let index = 0; index < result.length; index++) {
-            if (result[index].species === specie) {
-                cantCommonSpecies[aux] ++
-            }
-        }
-        aux ++
-    });
-
-    const mayorSpecies = cantCommonSpecies.reduce(
-        (firstValue, secondValue) => firstValue > secondValue ? 
-        cantCommonSpecies.indexOf(firstValue) : cantCommonSpecies.indexOf(secondValue)
-    );
-    console.log("ANALISIS DE ESPECIES");
-    console.log(`Cantidad de especies: ${species.length}`);
-    console.log(`Especie dominante: ${species[mayorSpecies]}`);
-
-}
-
-
-//Encontrar al personaje que ha aparecido en más episodios (mayor valor en episode.length)
-//Mostrar su nombre, imagen y número de episodios
-function getMostPopularCharacter(result){
-    let cantEpisodesPerCharacter = [];
-
-    result.forEach(character => {
-        let episodeLength = character.episode;
-        if (!cantEpisodesPerCharacter.includes(episodeLength)) {
-            cantEpisodesPerCharacter.push(episodeLength.length);
-        }
-    });
-
-    const populars = cantEpisodesPerCharacter.reduce((acum, value, index) => {
-    if (value > acum.max) {
-    // Nuevo máximo encontrado, reiniciar array de índices
-    return { max: value, indices: [index] };
-    // a acum.max se le da un nuevo valor
-    // se reinicia el arreglo indices con el indice actual
-    } else if (value === acum.max) {
-    // Mismo máximo, agregar índice
-    acum.indices.push(index);
+async function getRandomIds() { //obtengo 6 Ids randoms y les hago fetch a cada uno
+    let index = 0;
+    while (index < 6) { //creo los numeros randoms y los guardo en un array vacio
+        let randomNum = Math.floor(Math.random() * (1025)) + 1;
+        pokemonID.push(randomNum);
+        index ++
     }
-    return acum;
-    }, { max: -Infinity, indices: [] }); 
-    // maz es -infinity para asegurar que todos los numeros lo superen a la primera
-    // indices [] es un arreglo vacio para despues hacerle push
+    try { 
+        const requests = pokemonID.map(id =>    //le hago fetch a cada ID
+            fetch(urlPokemon+id)
+            .then(response => response.json())
+        );
+        Promise.all(requests)   //tomo los datos y llamo a las funciones a usar
+            .then(data =>{
+                result = data;
+                showPokemons = getShowPokemons(result);
+                showStats = getShowStats(result);
+                
+                botonCombatir.addEventListener("click", () =>{  //boton para iniciar el combate
+                    pokeCombat = getPokeCombat();
+                })
+            })
 
-    console.log("PERSONAJE MAS POPULAR:");
-    console.log("Los/El personaje/s mas popular/es son/es:");
-    for (let index = 0; index < result.length; index++) {
-        if (populars.indices.includes(index)) {
-                console.log(`Nombre: ${result[index].name}`);
-                console.log(`Cantidad de espisodios: ${populars.max}`);
-                console.log(`Imagen: ${result[index].image}`);
-        }
+    } catch (error){
+        console.error(`Error en la consola ${error}`);  //si no se puede hacer el fetch muestra error
     }
 }
 
-//Crear dos listas separadas: personajes masculinos y femeninos
-//Mostrar el recuento de cada género
-function getFilterByGender(result){
-    let cantMasculine = 0
-    let cantFemenine = 0
-    let cantUnkmown = 0
-    result.forEach(gender => {
-        if (gender.gender.includes("Male")) {
-            cantMasculine ++
-        } else if (gender.gender.includes("Female")){
-            cantFemenine ++
-        }
-        else if (gender.gender.includes("unknown")){
-            cantUnkmown ++
-        }
-    });
-    console.log("FILTRADO POR GENERO");
-    console.log(`Masculinos: ${cantMasculine}`);
-    console.log(`Femeninos: ${cantFemenine}`);
-    console.log(`Desconocidos: ${cantUnkmown}`);
-}
-
-
-//Permitir al usuario ingresar una ubicación (location.name)
-
-//Mostrar todos los personajes que coincidan con esa ubicación
-function getSearchByLocations(result) {
-    let locationNames = []
-    let characterNames = []
-    let allLocations = []
-    result.forEach(characterLocations => {
-        allLocations.push(characterLocations.location.name)
-        if (!locationNames.includes(characterLocations.location.name)) {
-            locationNames.push(characterLocations.location.name);
-        }
-        if (!characterNames.includes(characterLocations.name)) {
-            characterNames.push(characterLocations.name)
-        }
-    });
-
-    let select = document.getElementById("ubicacion");
-    locationNames.forEach(nombre => {
-        const opcion = document.createElement("option"); //Se esta creando un nuevo elemento para el DOM
-        opcion.value = nombre;  //con .value se le esta asignando su valor
-        opcion.textContent = nombre;    // con .textContent se le esta dando el contenido 
-        select.appendChild(opcion);
-      });
-
-    let boton = document.getElementById("buscar");
-    
-    boton.onclick = function(){
-        console.log("PERSONAJES POR UBICACION:")
-        for (let index = 0; index < result.length; index++) {
-            if (select.value === allLocations[index]) {
-                console.log(characterNames[index]);
-            }  
-        }
+function getPokeCombat() {  //Comparo ataque y defensa del equipo A y B para saber el ganador
+    let combat1 = aTeamAttack - bTeamDefense;
+    let combat2 = bTeamAttack - aTeamDefense;
+    if (combat1 > combat2) {    //simple comparativa, se crea una tarjeta para mostrar al ganador
+        mostrarGanador.innerHTML = 
+            `<div id="gano_rojo" class="tarjetas_teamA">
+                <h3>Ganador!</h3>
+                <p>Equipo Rojo</p>
+            </div>`;
+    } else if (combat2 > combat1) {
+        mostrarGanador.innerHTML = 
+            `<div id="gano_verde" class="tarjetas_teamB">
+                <h3>Ganador!</h3>
+                <p>Equipo Verde</p>
+            </div>`;
     }
 }
 
-getCharacters();
-*/
-let urlPokemon = 'https://pokeapi.co/api/v2/pokemon/character/';
+function getShowStats(result) { //mediante tarjetas muestro sus ataques y defensas totales
+    let index = 0;
+    let tarjetaStatsA = ``;
+    let tarjetaStatsB = ``;
+    result.forEach(res => { //sumo los ataquesy las defensas de cada equipo 
+        if (index < 3) {
+            aTeamAttack += res.stats[1].base_stat;
+            aTeamDefense += res.stats[2].base_stat;
+        } else {
+            bTeamAttack += res.stats[1].base_stat;
+            bTeamDefense += res.stats[2].base_stat;
+        }
+        index ++
+    });
+    tarjetaStatsA = //Tarjetas para mostrar los totales de cada equipo
+        `<div class="tarjetas_teamA">
+            <h3>Equipo Rojo</h3>
+            <p><strong>Ataque total:</strong> ${aTeamAttack}</p>
+            <p><strong>Defensa total:</strong> ${aTeamDefense}</p>
+        </div>`;
+    tarjetaStatsB = 
+        `<div class="tarjetas_teamB">
+            <h3>Equipo Verde</h3>
+            <p><strong>Ataque total:</strong> ${bTeamAttack}</p>
+            <p><strong>Defensa total:</strong> ${bTeamDefense}</p>
+        </div>`;
+    mostrarStats.innerHTML += tarjetaStatsA + tarjetaStatsB;
 
-function consulNombres(){
-    fetch(urlPokemon)
-    .then(respuesta => respuesta.json())
-    .then(datos => {
-        const pokemonNames = datos.results
-        pokemonNames.forEach(pokeName => {
-            console.log(pokeName.name)
-        })
-    })
 }
 
-function getPersonaje(){
-    
-    let pokemon1 = document.getElementById("id_pokemon")
-    let pokemon2 = document.getElementById("id_pokemon2")
-    let nombres= "";
-    fetch("https://rickandmortyapi.com/api/character/"+pokemon1.value)
-    .then(respuesta2 => respuesta2.json())
-    .then(datos2 => {
-        const resultados = datos2.name
-        const mostrarNombre1 = document.getElementById("nombre_pokemon")
-        nombres+= resultados +", "; 
-        mostrarNombre1.innerHTML=nombres
-        })
+function getShowPokemons(result) {  //Con tarjetas muestro la info de los pokemon obtenido en el fetch
+    let tarjetaHTML = ``;
+    let index = 0;
 
-    fetch("https://rickandmortyapi.com/api/character/"+pokemon2.value)
-    .then(respuesta2 => respuesta2.json())
-    .then(datos2 => {
-        const resultados = datos2.name
-        const mostrarNombre1 = document.getElementById("nombre_pokemon")
-        nombres+= resultados; 
-        mostrarNombre1.innerHTML=nombres
-        })
-    }
+    result.forEach(res => { //tarjetas para cada pokemon de cada equipo por separado
+        let pokeImg = res.sprites.front_default;
+        if (index < 3) {
+            tarjetaHTML = 
+                `<div class="tarjetas_teamA">
+                <img src="${pokeImg}" alt="${res.name}">
+                <h3>${res.name}</h3>
+                <p><strong>Ataque:</strong> ${res.stats[1].base_stat}</p>
+                <p><strong>Defensa:</strong> ${res.stats[2].base_stat}</p>
+                </div>`;
+        } else {
+            tarjetaHTML = 
+                `<div class="tarjetas_teamB">
+                <img src="${pokeImg}" alt="${res.name}">
+                <h3>${res.name}</h3>
+                <p><strong>Ataque:</strong> ${res.stats[1].base_stat}</p>
+                <p><strong>Defensa:</strong> ${res.stats[2].base_stat}</p>
+                </div>`;
+        }
+        mostrarPokemon.innerHTML += tarjetaHTML;
+        index ++
+    });
+}
+
+getRandomIds();
