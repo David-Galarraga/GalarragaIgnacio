@@ -55,6 +55,11 @@ function getPokeCombat() {  //Comparo ataque y defensa del equipo A y B para sab
                 <h3>Ganador!</h3>
                 <p>Equipo Verde</p>
             </div>`;
+    } else if (combat1 = combat2) {
+        mostrarGanador.innerHTML = 
+            `<div id="empate" class="tarjetas_empate">
+                <h3>Empate!</h3>
+            </div>`;
     }
 }
 
