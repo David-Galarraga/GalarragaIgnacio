@@ -1,6 +1,3 @@
-<?php
-    session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +6,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form method="post" action="revisar.php">
+    <form method="post" action="control\revisar.php">
         <label for="nickname">nickname</label> <br>
         <input name="nickname" type="nickname"> <br>
         <label for="password">contraseña</label> <br>

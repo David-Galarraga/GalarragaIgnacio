@@ -1,5 +1,5 @@
 <?php
-require_once "User.php";
+require_once "entidades\User.php";
 $user = new User();
 $users = $user->getAll();
 foreach ($users as $u) {

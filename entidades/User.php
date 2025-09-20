@@ -1,5 +1,5 @@
 <?php
-require_once "Database.php";
+require_once "../datos/Database.php";
 class User {
     private $db;
     public function __construct() {
@@ -11,7 +11,7 @@ class User {
         $stmt->execute([`:password` => $password, `:nombre` => $nombre, `:apellido` => $apellido, `:nickname` => $nickname, `:rol` => $rol]);
     }
     public function getAll() {
-        $sql = "SELECT * FROM usarios";
+        $sql = "SELECT * FROM usuarios";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
