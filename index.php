@@ -6,7 +6,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form method="post" action="control\revisar.php">
+    <form method="post" action="control\UsuarioControlador.php">
         <label for="nickname">nickname</label> <br>
         <input name="nickname" type="nickname"> <br>
         <label for="password">contraseña</label> <br>

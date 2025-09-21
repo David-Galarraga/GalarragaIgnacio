@@ -1,14 +1,14 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db = "vapourware";
-    private $user = "root";
-    private $pass = "";
-    private $charset = "utf8mb4";
-    public function connect() {
+    private static $host = "localhost";
+    private static $db = "vapourware";
+    private static $user = "root";
+    private static $pass = "";
+    private static $charset = "utf8mb4";
+    public static function connect() {
         try {
-            $dsn = "mysql:host=$this->host;dbname=$this->db;charset=$this->charset";
-            $pdo = new PDO($dsn, $this->user, $this->pass);
+            $dsn = "mysql:host=" . self::$host . ";dbname=" . self::$db . ";charset=" . self::$charset ;
+            $pdo = new PDO($dsn, self::$user , self::$pass);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $pdo;
         } catch (PDOException $e) {
