@@ -1,8 +1,5 @@
 <?php
     include_once "../datos\Database.php";
-
-    $nickname = $_POST["nickname"];
-    $password = $_POST["password"];
     
     class UsuarioDao extends Database{
         protected static $cnx;
@@ -14,8 +11,12 @@
             self::$cnx = null;
         }
 
-        // login: metodo que sirve para validar el login
+        // login: metodo que sirve para validar el login, lo hace mediante peticiones (query)
         public static function login(User $obj_usuario){
+
+            if(!$obj_usuario->getNickname()){
+                return '';
+            }
             
             $query = "SELECT id, nombre, apellido, nickname, rol, fecha_registro
                 FROM usuarios
@@ -29,14 +30,23 @@
             $resultado-> execute();
             $logged = $resultado->fetch();
             
+            //Si se logra logear inicia la sesion y le carga los datos
             if ($logged) {
-                echo "Se inicio correctamente!";
-                var_dump($logged);
+                $datosSesion = array("nickname" => $_POST["nickname"], "password" => $_POST["password"]);
+                $_SESSION["datos"] = $datosSesion;
+                echo "<pre>";
+                var_dump($_SESSION["datos"]);
+                echo "</pre>";
+
+                echo "Se inicio correctamente! <br>";
+
                 echo "<button onclick=\"window.location.href='../vista/bienvenido.php'\">Continuar</button>";
                 return true;
             }else{
                 echo "Error! contraseña o usuario no encontrado! <br>";
                 echo "<button onclick=\"window.location.href='../index.php'\">Volver</button>";
+                session_destroy();
+
                 return false;
             }
 

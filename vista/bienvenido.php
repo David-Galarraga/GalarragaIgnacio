@@ -1,3 +1,7 @@
+<?php
+    include_once "../middleWork/controlarSesiones.php";
+    var_dump($_SESSION);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +12,5 @@
 <body>
     <p>Bienvenido!</p>
 
-    
-    
 </body>
 </html>
