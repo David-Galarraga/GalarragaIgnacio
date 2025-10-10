@@ -32,15 +32,19 @@
             
             //Si se logra logear inicia la sesion y le carga los datos
             if ($logged) {
-                $datosSesion = array("nickname" => $_POST["nickname"], "password" => $_POST["password"]);
+                $datosSesion = array("nickname" => $logged["nickname"], "password" => $_POST["password"], "rol" => $logged["rol"]);
                 $_SESSION["datos"] = $datosSesion;
+
                 echo "<pre>";
-                var_dump($_SESSION["datos"]);
+                var_dump($logged["rol"]);
                 echo "</pre>";
 
                 echo "Se inicio correctamente! <br>";
-
-                echo "<button onclick=\"window.location.href='../vista/bienvenido.php'\">Continuar</button>";
+                
+                if ($logged["rol"] === "Admin") {
+                    echo "<button onclick=\"window.location.href='../vista/bienvenidoAdmin.php'\">Continuar</button>";    
+                }
+                
                 return true;
             }else{
                 echo "Error! contraseña o usuario no encontrado! <br>";
