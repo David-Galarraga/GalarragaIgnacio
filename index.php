@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once "middleWork/controlarSesiones.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -12,9 +13,9 @@ session_start();
 <body>
     <form method="post" action="control\UsuarioControlador.php">
         <label for="nickname">nickname</label> <br>
-        <input name="nickname" type="nickname"> <br>
+        <input name="nickname" type="nickname" required> <br>
         <label for="password">contraseña</label> <br>
-        <input name="password" type="password"> <br>
+        <input name="password" type="password" required> <br>
         <input type="submit" value="Enviar">
     </form>
 </body>

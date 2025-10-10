@@ -1,6 +1,8 @@
 <?php
     include "revisarLogin.php";
     include "../entidades/User.php";
+    
+
     $nickname = $_POST["nickname"];
     $password = $_POST["password"];
 

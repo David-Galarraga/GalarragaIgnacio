@@ -12,8 +12,10 @@
 <body>
     <p>Bienvenido Admin!</p>
     <div class="crudUsuario">
-        <button onclick="window.location.href='listar.php'">Listar Usuarios</button> <br>
-        <button onclick="window.location.href='insert.php'">Insertar Usuarios</button>
+        <button onclick="window.location.href='../control/listar.php'">Listar Usuarios</button> <br>
+        <button onclick="window.location.href='insertarUsuario.php'">Insertar Usuarios</button> <br>
+        <button onclick="window.location.href='deleteUsuario.php'">Eliminar Usuarios</button> <br>
+        <button onclick="window.location.href='editUsuario.php'">Editar Usuarios</button> <br>
     </div>
 
 
