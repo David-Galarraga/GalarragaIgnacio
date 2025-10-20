@@ -37,6 +37,8 @@
                 $datosSesion = array("id" => $logged["id"], "rol" => $logged["rol"]);
                 $_SESSION["datos"] = $datosSesion;
 
+                echo $_SESSION["datos"]["id"];
+
                 echo "Se inicio correctamente! <br>";
                 
                 if ($logged["rol"] === "Admin") {

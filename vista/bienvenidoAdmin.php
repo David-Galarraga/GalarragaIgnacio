@@ -17,6 +17,11 @@
         <button onclick="window.location.href='deleteUsuario.php'">Eliminar Usuarios</button> <br>
         <button onclick="window.location.href='editUsuario.php'">Editar Usuarios</button> <br>
     </div>
+    <hr>
+    <div>
+        <button onclick="window.location.href='../control/listGames.php'">Listar juegos</button> <br>
+        <button onclick="window.location.href='insertarJuego.php'">Insertar Juego</button> <br>
+    </div>
 
 
 </body>

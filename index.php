@@ -1,8 +1,3 @@
-<?php
-require_once "middleWork/controlarSesiones.php";
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

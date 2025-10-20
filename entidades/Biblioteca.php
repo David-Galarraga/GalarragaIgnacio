@@ -1,19 +1,22 @@
 <?php
-
-use BcMath\Number;
-
 require_once "User.php";
 
 Class Biblioteca{
     private User $user;
-    private $id;
-
+    private $db;
 
     function __construct(){
-         $this -> user = new User();
+        $this->db = (new Database())->connect();
     }
 
-    private function verificarUsuario(Number $userID){
+    function getAll(){
+        self::verificarUsuario($_SESSION["datos"]["id"]);
+        $sql = "SELECT * FROM biblioteca";
+        $stmt = $this-> db -> query($sql) ;
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    } 
+
+    private function verificarUsuario($userID){
         $user = $this -> user -> getByID($userID);
         if (!$user) {
             echo "Usuario no encontrado";
@@ -24,7 +27,7 @@ Class Biblioteca{
             return false;
         }
     }
-    function create(Number $userID){ //buscar al usuario
+    function create($userID){ //buscar al usuario
        
         
     }

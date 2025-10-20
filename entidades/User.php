@@ -1,14 +1,11 @@
 <?php
-
-use BcMath\Number;
-
 require_once "../datos/Database.php";
 class User {
     private $db;
     private $id;
     private $password;
     private $nombre;
-    public $apellido;
+    private $apellido;
     private $nickname;
     private $rol;
 	public const ROL_USUARIO = "usuario";
@@ -87,7 +84,7 @@ class User {
     public function getAll() {
         $sql = "SELECT * FROM usuarios";
         $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_CLASS);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     public function update($id, $password, $nombre, $apellido, $nickname, $rol) {
         $sql = "UPDATE usuarios SET password = :password, nombre = :nombre, apellido = :apellido, nickname = :nickname, rol = :rol WHERE id = :id";
@@ -99,7 +96,7 @@ class User {
         $stmt = $this->db->prepare($sql);
         $stmt->execute([":id" => $id]);
     }
-	public function getByID($id){
+	public function getByID(int $id){
 		$sql = "SELECT * FROM usuarios WHERE id = :id";
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute([":id" => $id]);
