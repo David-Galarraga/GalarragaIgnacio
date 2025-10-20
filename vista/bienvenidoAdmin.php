@@ -12,15 +12,17 @@
 <body>
     <p>Bienvenido Admin!</p>
     <div class="crudUsuario">
-        <button onclick="window.location.href='../control/listar.php'">Listar Usuarios</button> <br>
-        <button onclick="window.location.href='insertarUsuario.php'">Insertar Usuarios</button> <br>
-        <button onclick="window.location.href='deleteUsuario.php'">Eliminar Usuarios</button> <br>
-        <button onclick="window.location.href='editUsuario.php'">Editar Usuarios</button> <br>
+        <button onclick="window.location.href='../control/listar.php'">Listar usuarios</button> <br>
+        <button onclick="window.location.href='insertarUsuario.php'">Insertar usuarios</button> <br>
+        <button onclick="window.location.href='deleteUsuario.php'">Eliminar usuarios</button> <br>
+        <button onclick="window.location.href='editUsuario.php'">Editar usuarios</button> <br>
     </div>
     <hr>
     <div>
         <button onclick="window.location.href='../control/listGames.php'">Listar juegos</button> <br>
-        <button onclick="window.location.href='insertarJuego.php'">Insertar Juego</button> <br>
+        <button onclick="window.location.href='insertarJuego.php'">Insertar juego</button> <br>
+        <button onclick="window.location.href='deleteJuego.php'">Eliminar juego</button> <br>
+        <button onclick="window.location.href='editJuego.php'">Editar juego</button> <br>
     </div>
 
 

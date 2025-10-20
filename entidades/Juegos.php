@@ -22,5 +22,15 @@ Class Juego{
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    public function delete($id) {
+        $sql = "DELETE FROM juegos WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([":id" => $id]);
+    }
+    public function update($id, $nombre, $descripcion, $thumbnail, $plataforma) {
+        $sql = "UPDATE juegos SET nombre = :nombre, descripcion = :descripcion, thumbnail = :thumbnail, plataforma = :plataforma WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([":id" => $id, ":nombre" => $nombre, ":descripcion" => $descripcion, ":thumbnail" => $thumbnail, ":plataforma" => $plataforma]);
+    }
 };
 

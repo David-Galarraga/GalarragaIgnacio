@@ -1,6 +1,5 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
-    var_dump($_SESSION["datos"]);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,8 +9,8 @@
     <title>Eliminar</title>
 </head>
 <body>
-    <h1>Eliminar un usuario por ID</h1> <br>
-    <form method="post" action="../control/delete.php">
+    <h1>Eliminar un juego por ID</h1> <br>
+    <form method="post" action="../control/deleteGame.php">
         <label for="id">ID</label> <br>
         <input name="id" type="id" required> <br>
 
