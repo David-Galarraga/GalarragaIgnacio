@@ -1,6 +1,5 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
-    var_dump($_SESSION["datos"]);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,8 +20,8 @@
         <label for="apellido">Apellido</label> <br>
         <input name="apellido" type="apellido" required> <br>
 
-        <label for="email">Email</label> <br>
-        <input name="email" type="email" required> <br>
+        <label for="nickname">Nickname</label> <br>
+        <input name="nickname" type="nickname" required> <br>
 
         <label for="rol">Rol</label> <br>
         <input name="rol" type="rol" required> <br>

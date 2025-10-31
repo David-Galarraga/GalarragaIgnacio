@@ -1,6 +1,5 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
-    var_dump($_SESSION["datos"]);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -11,7 +10,7 @@
 </head>
 <body>
     <p>Bienvenido Admin!</p>
-    <div class="crudUsuario">
+    <div>
         <button onclick="window.location.href='../control/listar.php'">Listar usuarios</button> <br>
         <button onclick="window.location.href='insertarUsuario.php'">Insertar usuarios</button> <br>
         <button onclick="window.location.href='deleteUsuario.php'">Eliminar usuarios</button> <br>

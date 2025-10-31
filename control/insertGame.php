@@ -1,6 +1,6 @@
 <?php
 require_once "../entidades/Juegos.php";
-
+require_once "../middleWork/controlarSesiones.php";
 $api = file_get_contents("../datos/Juegos.json");
 $datos = json_decode($api, true);
 

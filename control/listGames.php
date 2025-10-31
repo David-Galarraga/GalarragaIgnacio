@@ -1,5 +1,6 @@
 <?php
 require_once "../entidades/Juegos.php";
+require_once "../middleWork/controlarSesiones.php";
 $juego = new Juego();
 $juegos = $juego -> getAll();
 

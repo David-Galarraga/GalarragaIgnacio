@@ -73,13 +73,14 @@ class User {
     }
     public function add($password, $nombre, $apellido, $nickname, $rol) {
 		$sql = "INSERT INTO usuarios (password, nombre, apellido, nickname, rol) VALUES (?, ?, ?, ?, ?)";
-		//:password, :nombre, :apellido, :nickname, :rol Solucionar
         $stmt = $this->db->prepare($sql);
 		$stmt->execute([$password, $nombre, $apellido, $nickname, $rol]);
-		/*solucionado, si en values le paso las posiciones con '?', 
-		entonces en execute le paso directamente las variables: $password, $nombre, etc;
-		sino le paso:
-		$stmt->execute([`:password` => $password, `:nombre` => $nombre, `:apellido` => $apellido, `:nickname` => $nickname, `:rol` => $rol]); */ 
+
+		$idNuevoUsuario = $this -> db -> lastInsertId();
+
+		$sqlBiblioteca = "INSERT INTO biblioteca (id_usuario) VALUES (?)";
+		$stmtBiblioteca = $this-> db -> prepare($sqlBiblioteca);
+		$stmtBiblioteca -> execute([$idNuevoUsuario]);
 	}
     public function getAll() {
         $sql = "SELECT * FROM usuarios";
@@ -92,10 +93,30 @@ class User {
         $stmt->execute([":password" => $password, ":nombre" => $nombre, ":apellido" => $apellido, ":nickname" => $nickname, ":rol" => $rol , ':id' => $id]);
     }
     public function delete($id) {
+		
+		$sqlGetBibliotecaId = "SELECT id FROM biblioteca WHERE id_usuario = :id";
+    	$stmtGetBibliotecaId = $this->db->prepare($sqlGetBibliotecaId);
+    	$stmtGetBibliotecaId->execute([":id" => $id]);
+    	$bibliotecaId = $stmtGetBibliotecaId->fetchColumn();
+
+		if ($bibliotecaId) {
+			/*
+			$sqlDeleteJuegos = "DELETE FROM bibliotecas_juegos WHERE id_biblioteca = :id_biblioteca";
+        	$stmtDeleteJuegos = $this->db->prepare($sqlDeleteJuegos);
+        	$stmtDeleteJuegos->execute([":id_biblioteca" => $bibliotecaId]);
+			*/
+
+			$sqlBiblioteca = "DELETE FROM biblioteca WHERE id_usuario = :id_usuario";
+        	$stmtBiblioteca = $this->db->prepare($sqlBiblioteca);
+        	$stmtBiblioteca->execute([":id_usuario" => $id]);
+		}
+		
         $sql = "DELETE FROM usuarios WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([":id" => $id]);
-    }
+
+		
+	}
 	public function getByID(int $id){
 		$sql = "SELECT * FROM usuarios WHERE id = :id";
 		$stmt = $this->db->prepare($sql);

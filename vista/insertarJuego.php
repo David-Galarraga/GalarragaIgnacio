@@ -1,6 +1,5 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
-    var_dump($_SESSION["datos"]);
 ?>
 <!DOCTYPE html>
 <html lang="es">

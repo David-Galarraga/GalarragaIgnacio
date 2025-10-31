@@ -1,5 +1,6 @@
 <?php
 require_once "../entidades/User.php";
+require_once "../middleWork/controlarSesiones.php";
 $user = new User();
 $users = $user->getAll();
 
