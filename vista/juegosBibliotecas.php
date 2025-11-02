@@ -4,8 +4,6 @@ require_once "../entidades/Biblioteca.php";
 $biblioteca = new Biblioteca();
 $idBiblioteca = $biblioteca -> getID($_SESSION["datos"]["id"]);
 
-echo "<button onclick='window.location.href=`../control/addListGames.php`'>Añadir Juego</button> <br>";
-echo "<button onclick='window.location.href=`bienvenidoUsuario.php`'>Volver</button> <br>";
 
 $juegosBiblioteca = $biblioteca -> getGamesDetails($idBiblioteca);
 
@@ -18,6 +16,12 @@ $juegosBiblioteca = $biblioteca -> getGamesDetails($idBiblioteca);
     <title>Biblioteca Personal</title>
 </head>
 <body>
+    <header> 
+        <button onclick="window.location.href='bienvenidoUsuario.php'">Inicio</button>
+        <button onclick="window.location.href='../middleWork/logoutSesion.php'">Salir</button>
+    </header> <hr>
+    <button onclick="window.location.href='../control/addListGames.php'">Añadir juego</button> <br>
+    <button onclick="window.location.href='bienvenidoUsuario'">Volver</button> <br>
     <p>
         <?php
             foreach ($juegosBiblioteca as $jb){

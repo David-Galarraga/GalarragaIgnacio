@@ -9,6 +9,10 @@
     <title>inicio de Admin</title>
 </head>
 <body>
+    <header> 
+        <button onclick="window.location.href='bienvenidoAdmin.php'">Inicio</button>
+        <button onclick="window.location.href='../middleWork/logoutSesion.php'">Salir</button>
+    </header> <hr>
     <p>Bienvenido Admin!</p>
     <div>
         <button onclick="window.location.href='../control/listar.php'">Listar usuarios</button> <br>

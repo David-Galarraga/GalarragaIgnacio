@@ -14,6 +14,10 @@ $juegos = $juego -> getAll();
     <title>Lista de Juegos</title>
 </head>
 <body>
+    <header> 
+        <button onclick="window.location.href='bienvenidoUsuario.php'">Inicio</button>
+        <button onclick="window.location.href='../middleWork/logoutSesion.php'">Salir</button>
+    </header> <hr>
     <div>
         <h2>Juegos</h2> <br>
         <button onclick="window.location.href='../vista/juegosBibliotecas.php'">Volver</button> <br>

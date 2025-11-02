@@ -9,6 +9,10 @@
     <title>Inicio Usuario</title>
 </head>
 <body>
+    <header> 
+        <button onclick="window.location.href='bienvenidoUsuario.php'">Inicio</button>
+        <button onclick="window.location.href='../middleWork/logoutSesion.php'">Salir</button>
+    </header> <hr>
     <div>
         <button onclick="window.location.href=''">Perfil</button> <br>
         <button onclick="window.location.href='juegosBibliotecas.php'">Biblioteca</button> <br>
