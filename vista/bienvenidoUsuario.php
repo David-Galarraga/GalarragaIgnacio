@@ -14,7 +14,6 @@
         <button onclick="window.location.href='../middleWork/logoutSesion.php'">Salir</button>
     </header> <hr>
     <div>
-        <button onclick="window.location.href=''">Perfil</button> <br>
         <button onclick="window.location.href='juegosBibliotecas.php'">Biblioteca</button> <br>
     </div>
 </body>

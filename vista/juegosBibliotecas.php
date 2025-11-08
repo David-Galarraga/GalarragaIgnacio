@@ -20,16 +20,24 @@ $juegosBiblioteca = $biblioteca -> getGamesDetails($idBiblioteca);
         <button onclick="window.location.href='bienvenidoUsuario.php'">Inicio</button>
         <button onclick="window.location.href='../middleWork/logoutSesion.php'">Salir</button>
     </header> <hr>
+
     <button onclick="window.location.href='../control/addListGames.php'">Añadir juego</button> <br>
     <button onclick="window.location.href='bienvenidoUsuario'">Volver</button> <br>
+
+
     <p>
         <?php
             foreach ($juegosBiblioteca as $jb){
+                $idJuego = $jb["id"];
                 echo <<<TEXT
                     NOMBRE: $jb[nombre] <br>
+                    ID: $jb[id] <br>
                     PLATAFORMAS: $jb[plataforma] <br>
                     DESCRIPCION: $jb[descripcion] <br>
-                    <img src=$jb[thumbnail]></img> <hr>
+                    <img src=$jb[thumbnail]></img> <br>
+                    <button onclick="window.location.href='../control/deleteGameFromLibrary.php?idJuego=$idJuego'">Eliminar de biblioteca</button>
+                    <hr>
+
                 TEXT;
             }
         ?>

@@ -27,6 +27,6 @@
 
         <input type="submit" value="enviar">
     </form>
-    <button onclick="window.location.href='bienvenidoAdmin.php'">Volver</button>;
+    <button onclick="window.location.href='bienvenidoAdmin.php'">Volver</button>
 </body>
 </html>

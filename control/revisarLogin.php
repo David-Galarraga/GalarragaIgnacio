@@ -21,6 +21,7 @@
             $query = "SELECT id, nombre, apellido, nickname, rol, fecha_registro
                 FROM usuarios
                 WHERE nickname = :nickname AND password = :password";
+                
             self::getConexion();
 
 

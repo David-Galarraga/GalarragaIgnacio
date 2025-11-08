@@ -18,6 +18,12 @@ Class Biblioteca{
         return $this -> id;
     }
 
+    function deleteGame($id){
+        $sql = "DELETE FROM biblotecas_juegos
+            WHERE id = :id  ";
+        
+    } 
+
     public function getGames($idBiblioteca){
         $sql = "SELECT id_juego 
             FROM bibliotecas_juegos 
@@ -36,7 +42,7 @@ Class Biblioteca{
 
     public function getGamesDetails($idBiblioteca){
         $sql = <<<SQL
-            SELECT nombre, descripcion, thumbnail, plataforma 
+            SELECT id, nombre, descripcion, thumbnail, plataforma 
             FROM juegos 
             INNER JOIN bibliotecas_juegos ON juegos.id = bibliotecas_juegos.id_juego
             WHERE bibliotecas_juegos.id_biblioteca = :idBiblioteca

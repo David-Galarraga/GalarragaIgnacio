@@ -2,10 +2,6 @@
 require_once "../datos/Database.php";
 Class Juego{
     private $db;
-    private $nombre;
-    private $descripcion;
-    private $thumbnail;
-    private $plataforma;
 
     public function __construct(){
         $this->db = (new Database())->connect();
