@@ -1,5 +1,9 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
+    if (!$_SESSION["datos"]["rol"] === "Admin") {
+        header("Location: ../index.php");
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,7 +16,7 @@
     <h1>Registar un nuevo usuario</h1> <br>
     <form method="post" action="../control/insert.php">
         <label for="password">Password</label> <br>
-        <input name="password" type="nickname" required> <br>
+        <input name="password" type="password" maxlength="100" required> <br>
 
         <label for="nombre">Nombre</label> <br>
         <input name="nombre" type="nombre" required> <br>

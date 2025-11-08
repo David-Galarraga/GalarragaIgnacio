@@ -1,6 +1,10 @@
 <?php
 require_once "../middleWork/controlarSesiones.php";
 require_once "../entidades/Juegos.php";
+if (!$_SESSION["datos"]["rol"] === "usuario") {
+        header("Location: ../index.php");
+        exit();
+    }
 
 
 $juego = new Juego();

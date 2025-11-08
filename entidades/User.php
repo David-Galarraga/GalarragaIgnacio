@@ -97,19 +97,18 @@ class User {
 		$sqlGetBibliotecaId = "SELECT id FROM biblioteca WHERE id_usuario = :id";
     	$stmtGetBibliotecaId = $this->db->prepare($sqlGetBibliotecaId);
     	$stmtGetBibliotecaId->execute([":id" => $id]);
-    	$bibliotecaId = $stmtGetBibliotecaId->fetchColumn();
+    	$bibliotecaId = $stmtGetBibliotecaId->fetch();
 
-		if ($bibliotecaId) {
-			/*
-			$sqlDeleteJuegos = "DELETE FROM bibliotecas_juegos WHERE id_biblioteca = :id_biblioteca";
-        	$stmtDeleteJuegos = $this->db->prepare($sqlDeleteJuegos);
-        	$stmtDeleteJuegos->execute([":id_biblioteca" => $bibliotecaId]);
-			*/
+		
+		$sqlDeleteJuegos = "DELETE FROM bibliotecas_juegos WHERE id_biblioteca = :id_biblioteca";
+		$stmtDeleteJuegos = $this->db->prepare($sqlDeleteJuegos);
+		$stmtDeleteJuegos->execute([":id_biblioteca" => $bibliotecaId["id"]]);
+		
 
-			$sqlBiblioteca = "DELETE FROM biblioteca WHERE id_usuario = :id_usuario";
-        	$stmtBiblioteca = $this->db->prepare($sqlBiblioteca);
-        	$stmtBiblioteca->execute([":id_usuario" => $id]);
-		}
+		$sqlBiblioteca = "DELETE FROM biblioteca WHERE id_usuario = :id_usuario";
+		$stmtBiblioteca = $this->db->prepare($sqlBiblioteca);
+		$stmtBiblioteca->execute([":id_usuario" => $id]);
+		
 		
         $sql = "DELETE FROM usuarios WHERE id = :id";
         $stmt = $this->db->prepare($sql);

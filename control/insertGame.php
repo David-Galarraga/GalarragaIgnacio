@@ -1,6 +1,10 @@
 <?php
 require_once "../entidades/Juegos.php";
 require_once "../middleWork/controlarSesiones.php";
+if (!$_SESSION["datos"]["rol"] === "Admin") {
+        header("Location: ../index.php");
+        exit();
+    }
 $api = file_get_contents("../datos/Juegos.json");
 $datos = json_decode($api, true);
 

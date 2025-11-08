@@ -1,6 +1,10 @@
 <?php
 require_once "../entidades/Biblioteca.php";
 require_once "../middleWork/controlarSesiones.php";
+if (!$_SESSION["datos"]["rol"] === "usuario") {
+        header("Location: ../index.php");
+        exit();
+    }
 
 if (isset($_GET['idJuego'])) {
     $idJuego = $_GET['idJuego'];

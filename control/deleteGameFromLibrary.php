@@ -1,6 +1,10 @@
 <?php
     require_once "../entidades/Biblioteca.php";
     require_once "../middleWork/controlarSesiones.php";
+    if (!$_SESSION["datos"]["rol"] === "usuario") {
+        header("Location: ../index.php");
+        exit();
+    }
     
 
 if (isset($_GET['idJuego'])) {
@@ -10,18 +14,8 @@ if (isset($_GET['idJuego'])) {
     $biblioteca = new Biblioteca();
     $idBiblioteca = $biblioteca -> getID($idUsuario);
 
-    $juegosBiblioteca = $biblioteca -> getGames($idBiblioteca);
-
-    foreach ($juegosBiblioteca as $jb) {
-        if ($jb["id_juego"] == $idJuego) {
-            echo "Petición invalida - Juego ya incluido en biblioteca" . "<br>";
-            echo "<button onclick=\"window.location.href='../control/addListGames.php'\">Volver</button>";
-            die;
-        }
-    }
-
-    $biblioteca -> ($idBiblioteca, $idJuego);
-    header("Location: .php");
+    $biblioteca -> deleteGame($idJuego, $idBiblioteca);
+    header("Location:../vista/juegosBibliotecas.php");
     exit();
 }
 ?>
