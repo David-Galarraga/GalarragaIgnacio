@@ -36,9 +36,7 @@
             <div class="mb-6">
                 <label 
                     for="password" 
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                >
-                    Contraseña
+                    class="block text-gray-700 text-sm font-bold mb-2">Contraseña
                 </label>
                 <input 
                     name="password" 
@@ -56,7 +54,12 @@
                     class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer transition duration-300 ease-in-out w-full"
                 >
             </div>
-            
+
+            <div class="flex items-center justify-center">
+                <button onclick="window.location.href='vista/registro.php'"
+                    class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer transition duration-300 ease-in-out w-full"
+                    >Registrar
+            </div>
         </form>
         <p class="text-center text-gray-500 text-xs">
             &copy;2025 Vapourware. Todos los derechos reservados.

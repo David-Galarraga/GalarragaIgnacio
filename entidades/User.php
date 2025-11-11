@@ -116,10 +116,18 @@ class User {
 
 		
 	}
+
 	public function getByID(int $id){
 		$sql = "SELECT * FROM usuarios WHERE id = :id";
 		$stmt = $this->db->prepare($sql);
 		$stmt->execute([":id" => $id]);
 		return $stmt->fetch(PDO::FETCH_OBJ);
+	}
+
+	public function getNicknames(){
+		$sql = "SELECT nickname FROM usuarios";
+		$stmt = $this -> db -> prepare($sql);
+		$stmt -> execute();
+		return $stmt -> fetchAll(PDO::FETCH_COLUMN);
 	}
 }

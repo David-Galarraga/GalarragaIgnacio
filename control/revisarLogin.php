@@ -55,7 +55,22 @@
             $verified = password_verify($obj_usuario ->getPassword(), $logged["password"]);
 
             if (!$verified) {
-                echo "Tomatela";
+                // Mensaje de error 
+                echo '<div class="flex items-center justify-center h-screen bg-gray-100">';
+                echo '<div class="bg-white shadow-xl rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md text-center border-l-4 border-red-500">';
+    
+                // Mensaje principal de error
+                echo '<p class="text-red-500 text-xl font-semibold mb-4">¡Error de inicio de sesión!</p>';
+                echo '<p class="text-gray-700 mb-6">Contraseña o usuario no valido.</p>';
+    
+                // Botón Volver 
+                $buttonClassError = 'bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer transition duration-300 ease-in-out w-full';
+    
+                echo '<button onclick="window.location.href=\'../index.php\'" class="' . $buttonClassError . '">Volver a intentar</button>';
+    
+                echo '</div>';
+                echo '</div>'; // Cierra el contenedor de pantalla
+    
                 return false;
             }
 
