@@ -63,7 +63,7 @@
                 echo '<p class="text-red-500 text-xl font-semibold mb-4">¡Error de inicio de sesión!</p>';
                 echo '<p class="text-gray-700 mb-6">Contraseña o usuario no valido.</p>';
     
-                // Botón Volver 
+                // Botón para Volver 
                 $buttonClassError = 'bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer transition duration-300 ease-in-out w-full';
     
                 echo '<button onclick="window.location.href=\'../index.php\'" class="' . $buttonClassError . '">Volver a intentar</button>';

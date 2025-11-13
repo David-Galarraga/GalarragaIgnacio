@@ -71,6 +71,7 @@ class User {
     public function __construct() {
         $this->db = (new Database())->connect();
     }
+
     public function add($password, $nombre, $apellido, $nickname, $rol) {
 		$sql = "INSERT INTO usuarios (password, nombre, apellido, nickname, rol) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($sql);
@@ -82,16 +83,25 @@ class User {
 		$stmtBiblioteca = $this-> db -> prepare($sqlBiblioteca);
 		$stmtBiblioteca -> execute([$idNuevoUsuario]);
 	}
+	
     public function getAll() {
         $sql = "SELECT * FROM usuarios";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+	public function getAllId() {
+        $sql = "SELECT id FROM usuarios";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function update($id, $password, $nombre, $apellido, $nickname, $rol) {
         $sql = "UPDATE usuarios SET password = :password, nombre = :nombre, apellido = :apellido, nickname = :nickname, rol = :rol WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([":password" => $password, ":nombre" => $nombre, ":apellido" => $apellido, ":nickname" => $nickname, ":rol" => $rol , ':id' => $id]);
     }
+
     public function delete($id) {
 		
 		$sqlGetBibliotecaId = "SELECT id FROM biblioteca WHERE id_usuario = :id";
@@ -123,6 +133,13 @@ class User {
 		$stmt->execute([":id" => $id]);
 		return $stmt->fetch(PDO::FETCH_OBJ);
 	}
+
+	public function getByNickname($nick){
+		$sql = "SELECT id FROM usuarios WHERE nickname = :nick";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute([":nick" => $nick]);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}	
 
 	public function getNicknames(){
 		$sql = "SELECT nickname FROM usuarios";

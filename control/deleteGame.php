@@ -5,8 +5,38 @@ if (!$_SESSION["datos"]["rol"] === "Admin") {
         header("Location: ../index.php");
         exit();
     }
+
+$nomb = $_POST["nombre"];
 $juego = new Juego();
-$juego->delete($_POST["id"]);
-echo "Juego " . $_POST["id"] . " ha sido eliminado." . "\n";
-echo "<button onclick=\"window.location.href='../vista/bienvenidoAdmin.php'\">Volver</button>";
+$getId = $juego -> getID($nomb);
+$id = $getId["id"];
+$juego -> delete($id);
+
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Eliminación</title>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+
+    <div class="w-full max-w-md">
+        
+        <div class="bg-white shadow-xl rounded-lg px-8 pt-6 pb-8 mb-4 border-t-4 border-red-500 text-center">
+            
+            <p class="text-red-600 text-2xl font-bold mb-4">
+                <?php echo "El juego " . $nomb . " ha sido eliminado." . "\n"; ?>
+            </p>
+            
+            <button onclick="window.location.href='../vista/bienvenidoAdmin.php'"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer transition duration-300 ease-in-out w-full mt-4">
+                Volver
+            </button>
+            
+        </div>
+    </div>
+</body>
+</html>

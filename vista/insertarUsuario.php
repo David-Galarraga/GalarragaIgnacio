@@ -1,6 +1,7 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
-    if (!$_SESSION["datos"]["rol"] === "Admin") {
+    // Nota: Es mejor usar != para la negación si rol no es booleano y revisar isset.
+    if (!isset($_SESSION["datos"]["rol"]) || $_SESSION["datos"]["rol"] !== "Admin") {
         header("Location: ../index.php");
         exit();
     }
@@ -10,28 +11,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Registrar Usuario</title>
 </head>
-<body>
-    <h1>Registar un nuevo usuario</h1> <br>
-    <form method="post" action="../control/insert.php">
-        <label for="password">Password</label> <br>
-        <input name="password" type="password" maxlength="100" required> <br>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+    
+    <div class="w-full max-w-lg">
+        
+        <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-6">Registrar un nuevo usuario</h1>
+        
+        <form 
+            method="post" 
+            action="../control/insert.php"
+            class="bg-white shadow-xl rounded-lg px-8 pt-6 pb-8 mb-4"
+        >
 
-        <label for="nombre">Nombre</label> <br>
-        <input name="nombre" type="nombre" required> <br>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                <input 
+                    name="password" 
+                    type="password" 
+                    maxlength="100" 
+                    required
+                    placeholder="Contraseña segura"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
 
-        <label for="apellido">Apellido</label> <br>
-        <input name="apellido" type="apellido" required> <br>
+            <div class="mb-4">
+                <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre</label>
+                <input 
+                    name="nombre" 
+                    type="text" 
+                    required
+                    placeholder="Nombre del usuario"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
 
-        <label for="nickname">Nickname</label> <br>
-        <input name="nickname" type="nickname" required> <br>
+            <div class="mb-4">
+                <label for="apellido" class="block text-gray-700 text-sm font-bold mb-2">Apellido</label>
+                <input 
+                    name="apellido" 
+                    type="text" 
+                    required
+                    placeholder="Apellido del usuario"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
 
-        <label for="rol">Rol</label> <br>
-        <input name="rol" type="rol" required> <br>
+            <div class="mb-4">
+                <label for="nickname" class="block text-gray-700 text-sm font-bold mb-2">Nickname</label>
+                <input 
+                    name="nickname" 
+                    type="text" 
+                    required
+                    placeholder="Nickname único"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
 
-        <input type="submit" value="enviar">
-    </form>
-    <button onclick="window.location.href='bienvenidoAdmin.php'">Volver</button>
+            <div class="mb-6">
+                <label for="rol" class="block text-gray-700 text-sm font-bold mb-2">Rol</label>
+                <input 
+                    name="rol" 
+                    type="text" 
+                    required
+                    placeholder="Admin o usuario"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <div class="flex items-center justify-center mb-4">
+                <input 
+                    type="submit" 
+                    value="Registrar Usuario"
+                    class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer transition duration-300 ease-in-out w-full"
+                >
+            </div>
+        </form>
+        
+        <div class="flex items-center justify-center">
+            <button onclick="window.location.href='bienvenidoAdmin.php'"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-200 shadow-md w-full">
+                Volver
+            </button>
+        </div>
+
+    </div>
 </body>
 </html>

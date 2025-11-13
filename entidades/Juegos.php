@@ -18,7 +18,24 @@ Class Juego{
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    public function getNames() {
+        $sql = "SELECT nombre FROM juegos";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    public function getID($nomb) {
+        $sql = "SELECT id FROM juegos WHERE nombre = :nombre";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([":nombre" => $nomb]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function delete($id) {
+        $sqlBibliotecasJuegos = "DELETE FROM bibliotecas_juegos WHERE id_juego = :id";
+        $stmtBiliotecasJuegos = $this-> db -> prepare($sqlBibliotecasJuegos);
+        $stmtBiliotecasJuegos -> execute([":id" => $id]);
+
         $sql = "DELETE FROM juegos WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([":id" => $id]);
