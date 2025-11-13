@@ -1,12 +1,12 @@
 <?php
-require_once "../entidades/Juegos.php";
-require_once "../middleWork/controlarSesiones.php";
-if (!isset($_SESSION["datos"]["rol"]) || $_SESSION["datos"]["rol"] !== "Admin") {
-    header("Location: ../index.php");
-    exit();
-}
-$juego = new Juego();
-$juegos = $juego -> getAll();
+    require_once "../entidades/Juegos.php";
+    require_once "../middleWork/controlarSesiones.php";
+    if ($_SESSION["datos"]["rol"] !== "Admin") {
+        header("Location: ../index.php");
+        exit();
+    }
+    $juego = new Juego();
+    $juegos = $juego -> getAll();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +29,7 @@ $juegos = $juego -> getAll();
             </button>
         </div>
 
-        <!-- Grilla tipo estantería -->
+        <!-- estantería -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <?php
             if (!empty($juegos)) {
@@ -42,12 +42,12 @@ $juegos = $juego -> getAll();
                     
                     echo '<div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-t-4 border-indigo-500 flex flex-col h-full">';
                     
-                    // Imagen thumbnail
+                    // thumbnail
                     echo "<div class='w-full h-48 bg-gray-200 overflow-hidden'>";
                     echo "<img src='{$thumbnail}' alt='{$nombre_juego}' class='w-full h-full object-cover hover:scale-110 transition-transform duration-300'>";
                     echo "</div>";
                     
-                    // Contenido de la card
+                    // card
                     echo "<div class='p-5 flex flex-col flex-grow'>";
                     
                     // encabezado
@@ -58,14 +58,14 @@ $juegos = $juego -> getAll();
                     
                     // plataforma
                     echo "<p class='text-sm text-indigo-600 font-medium mb-3 flex-shrink-0'>";
-                    echo "<span class='bg-indigo-100 px-2 py-1 rounded'>📱 {$plataforma}</span>";
+                    echo "<span class='bg-indigo-100 px-2 py-1 rounded'>{$plataforma}</span>";
                     echo "</p>";
                     
                     // descripción
                     echo "<p class='text-gray-700 text-sm leading-relaxed line-clamp-4 flex-grow'>{$descripcion}</p>";
                     
-                    echo '</div>'; // cierre del div de contenido
-                    echo '</div>'; // cierre del div principal de la card
+                    echo '</div>'; 
+                    echo '</div>'; 
                 }
             } else {
                 echo '<div class="col-span-full bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-sm">';

@@ -1,6 +1,6 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
-    if (!$_SESSION["datos"]["rol"] === "usuario") {
+    if ($_SESSION["datos"]["rol"] !== "usuario") {
         header("Location: ../index.php");
         exit();
     }

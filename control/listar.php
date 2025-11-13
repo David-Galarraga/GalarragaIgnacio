@@ -1,14 +1,14 @@
 <?php
-require_once "../entidades/User.php";
-require_once "../middleWork/controlarSesiones.php";
+    require_once "../entidades/User.php";
+    require_once "../middleWork/controlarSesiones.php";
 
-if (!isset($_SESSION["datos"]["rol"]) || $_SESSION["datos"]["rol"] !== "Admin") {
-    header("Location: ../index.php");
-    exit();
-}
+    if ($_SESSION["datos"]["rol"] !== "Admin") {
+        header("Location: ../index.php");
+        exit();
+    }
 
-$user = new User();
-$users = $user->getAll();
+    $user = new User();
+    $users = $user->getAll();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,7 +38,7 @@ $users = $user->getAll();
                 <tbody class="bg-white divide-y divide-gray-200">
                     
                     <?php 
-                    // Muestra los datos en filas 
+                    // muestra los datos en filas 
                     if (!empty($users)): 
                         foreach ($users as $u):
                     ?>

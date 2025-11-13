@@ -1,7 +1,7 @@
 <?php
 require_once "../middleWork/controlarSesiones.php";
 require_once "../entidades/Juegos.php";
-if (!$_SESSION["datos"]["rol"] === "usuario") {
+if ($_SESSION["datos"]["rol"] !== "usuario") {
         header("Location: ../index.php");
         exit();
     }
@@ -45,7 +45,6 @@ $juegos = $juego -> getAll();
             </button>
         </div>
         
-        <!-- Grilla tipo estantería -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <?php
                 if (!empty($juegos)) {
@@ -58,36 +57,36 @@ $juegos = $juego -> getAll();
 
                         echo '<div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-t-4 border-green-500 flex flex-col h-full">';
                         
-                        // Imagen thumbnail
+                        // thumbnail
                         echo "<div class='w-full h-48 bg-gray-200 overflow-hidden'>";
                         echo "<img src='{$thumbnail}' alt='Thumbnail de {$nombre}' class='w-full h-full object-cover hover:scale-110 transition-transform duration-300'>";
                         echo "</div>";
                         
-                        // Contenido de la card
+                        // card
                         echo "<div class='p-5 flex flex-col flex-grow'>";
                         
-                        // Encabezado
+                        // encabezado
                         echo "<div class='mb-3'>";
                         echo "<h3 class='text-lg font-bold text-gray-800 mb-1 line-clamp-2'>{$nombre}</h3>";
                         echo "<span class='text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded'>ID: {$idJuego}</span>";
                         echo "</div>";
                         
-                        // Plataforma
+                        // plataforma
                         echo "<p class='text-sm text-indigo-600 font-medium mb-3 flex-shrink-0'>";
-                        echo "<span class='bg-indigo-100 px-2 py-1 rounded'>📱 {$plataforma}</span>";
+                        echo "<span class='bg-indigo-100 px-2 py-1 rounded'>{$plataforma}</span>";
                         echo "</p>";
                         
-                        // Descripción
+                        // descripción
                         echo "<p class='text-gray-700 text-sm leading-relaxed line-clamp-3 flex-grow mb-4'>{$descripcion}</p>";
                         
-                        // Botón añadir
+                        // boton añadir
                         echo "<button onclick=\"window.location.href='addGameOnLibrary.php?idJuego={$idJuego}'\"";
                         echo " class='bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-200 shadow-md w-full mt-auto'>";
                         echo "Añadir a la Biblioteca";
                         echo "</button>";
                         
-                        echo '</div>'; // cierre del div de contenido
-                        echo '</div>'; // cierre del div principal de la card
+                        echo '</div>'; 
+                        echo '</div>'; 
                     }
                 } else {
                     echo '<div class="col-span-full bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-sm">';

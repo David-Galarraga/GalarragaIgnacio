@@ -1,7 +1,7 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
     include_once "../entidades/User.php";
-    if (!isset($_SESSION["datos"]["rol"]) || $_SESSION["datos"]["rol"] !== "Admin") {
+    if ($_SESSION["datos"]["rol"] !== "Admin") {
         header("Location: ../index.php");
         exit();
     }

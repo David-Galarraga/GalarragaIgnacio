@@ -1,7 +1,7 @@
 <?php
 require_once "../middleWork/controlarSesiones.php";
 require_once "../entidades/Biblioteca.php";
-if (!$_SESSION["datos"]["rol"] === "usuario") {
+if ($_SESSION["datos"]["rol"] !== "usuario") {
         header("Location: ../index.php");
         exit();
     }
