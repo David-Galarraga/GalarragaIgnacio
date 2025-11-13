@@ -9,7 +9,7 @@
     $passCrypt = password_hash($_POST["password"], PASSWORD_DEFAULT);
     
     $user = new User();
-    $user->update($_POST["id"], $passCrypt, $_POST["nombre"], $_POST["apellido"], $_POST["email"], $_POST["rol"]);
+    $user->update($_POST["id"], $passCrypt, $_POST["nombre"], $_POST["apellido"], $_POST["nickname"], $_POST["rol"]);
 
 ?>
 <!DOCTYPE html>
