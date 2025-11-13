@@ -47,5 +47,4 @@ if (isset($_GET['idJuego'])) {
     header("Location: addListGames.php");
     exit();
 }
-// Si no hay idJuego, no se imprime nada (puede que se quiera redirigir si no hay GET)
 ?>

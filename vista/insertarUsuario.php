@@ -1,6 +1,5 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
-    // Nota: Es mejor usar != para la negación si rol no es booleano y revisar isset.
     if (!isset($_SESSION["datos"]["rol"]) || $_SESSION["datos"]["rol"] !== "Admin") {
         header("Location: ../index.php");
         exit();

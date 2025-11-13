@@ -6,7 +6,7 @@
     $nickname = $_POST["nickname"];
     $password = $_POST["password"];
 
-    UsuarioControlador::validarLogin($nickname,$password);
+    UsuarioControlador::validarLogin($nickname,$password); //valida el login
 
     class UsuarioControlador{
         public static function validarLogin($nickname, $password){
