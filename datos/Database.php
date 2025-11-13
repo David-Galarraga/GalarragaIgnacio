@@ -3,7 +3,7 @@ class Database {
     private static $host = "localhost";
     private static $db = "vapourware";
     private static $user = "root";
-    private static $pass = "";
+    private static $pass = "admin";
     private static $charset = "utf8mb4";
     public static function connect() {
         try {

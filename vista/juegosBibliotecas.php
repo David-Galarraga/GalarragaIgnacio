@@ -37,7 +37,7 @@ $juegosBiblioteca = $biblioteca -> getGamesDetails($idBiblioteca);
         </nav>
     </header>
 
-    <main class="container mx-auto p-6">
+    <main class="container mx-auto max-w-7xl p-6">
 
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b pb-4">
             <h2 class="text-3xl font-extrabold text-gray-800 mb-4 sm:mb-0">Mis Juegos</h2>
@@ -45,15 +45,16 @@ $juegosBiblioteca = $biblioteca -> getGamesDetails($idBiblioteca);
                 <button onclick="window.location.href='../control/addListGames.php'"
                     class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-200 shadow-md">
                     Añadir juego
-                </button> <br>
+                </button>
                 <button onclick="window.location.href='bienvenidoUsuario'"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-200 shadow-md">
                     Volver
-                </button> <br>
+                </button>
             </div>
         </div>
 
-        <p class="space-y-6">
+        <!-- Grilla tipo estantería -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <?php
                 if (!empty($juegosBiblioteca)) {
                     foreach ($juegosBiblioteca as $jb){
@@ -63,30 +64,46 @@ $juegosBiblioteca = $biblioteca -> getGamesDetails($idBiblioteca);
                         $descripcion = htmlspecialchars($jb["descripcion"]);
                         $thumbnail = htmlspecialchars($jb["thumbnail"]);
                         
-                        echo '<div class="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition duration-300">';
+                        echo '<div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-t-4 border-indigo-500 flex flex-col h-full">';
                         
-                        echo <<<TEXT
-                            <p class='mb-2'><span class='font-bold text-lg text-gray-800'>{$nombre}</span></p>
-                            <p class='mb-1 text-sm text-gray-500'>ID: {$idJuego}</p>
-                            <p class='mb-1 text-indigo-600 font-medium'>PLATAFORMAS: {$plataforma}</p>
-                            <p class='mb-4 text-gray-700'>DESCRIPCION: {$descripcion}</p>
-                            <img src='{$thumbnail}' alt='Thumbnail de {$nombre}' class='w-full max-h-48 object-cover rounded-md mb-4 border border-gray-200'></img> <br>
-                            <button onclick="window.location.href='../control/deleteGameFromLibrary.php?idJuego={$idJuego}'"
-                                class='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-200 shadow-md w-full'>
-                                Eliminar de biblioteca
-                            </button>
-                            <hr class="mt-4 border-gray-200">
-
-                        TEXT;
-                        echo '</div>';
+                        // Imagen thumbnail
+                        echo "<div class='w-full h-48 bg-gray-200 overflow-hidden'>";
+                        echo "<img src='{$thumbnail}' alt='Thumbnail de {$nombre}' class='w-full h-full object-cover hover:scale-110 transition-transform duration-300'>";
+                        echo "</div>";
+                        
+                        // Contenido de la card
+                        echo "<div class='p-5 flex flex-col flex-grow'>";
+                        
+                        // Encabezado
+                        echo "<div class='mb-3'>";
+                        echo "<h3 class='text-lg font-bold text-gray-800 mb-1 line-clamp-2'>{$nombre}</h3>";
+                        echo "<span class='text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded'>ID: {$idJuego}</span>";
+                        echo "</div>";
+                        
+                        // Plataforma
+                        echo "<p class='text-sm text-indigo-600 font-medium mb-3 flex-shrink-0'>";
+                        echo "<span class='bg-indigo-100 px-2 py-1 rounded'>📱 {$plataforma}</span>";
+                        echo "</p>";
+                        
+                        // Descripción
+                        echo "<p class='text-gray-700 text-sm leading-relaxed line-clamp-3 flex-grow mb-4'>{$descripcion}</p>";
+                        
+                        // Botón eliminar
+                        echo "<button onclick=\"window.location.href='../control/deleteGameFromLibrary.php?idJuego={$idJuego}'\"";
+                        echo " class='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-200 shadow-md w-full mt-auto'>";
+                        echo "Eliminar de biblioteca";
+                        echo "</button>";
+                        
+                        echo '</div>'; // cierre del div de contenido
+                        echo '</div>'; // cierre del div principal de la card
                     }
                 } else {
-                    echo '<div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded-md shadow-sm">';
+                    echo '<div class="col-span-full bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded-md shadow-sm">';
                     echo '<p>Tu biblioteca está vacía. Añade juegos del catálogo.</p>';
                     echo '</div>';
                 }
             ?>
-        </p>
+        </div>
     </main>
 </body>
 </html>
