@@ -7,6 +7,9 @@ if ($_SESSION["datos"]["rol"] !== "Admin") {
         exit();
     }
 $user = new User();
-$user->delete($_POST["id"]);
-echo "EL usuario n° " . $_POST["id"] . " ha sido eliminado." . "\n";
+$ID = $user -> getByNickname($_POST["nickname"]);
+$userID = $ID["id"];
+$user -> delete($userID);
+
+echo "Usuario Eliminado con exito <br>";
 echo "<button onclick=\"window.location.href='../vista/bienvenidoAdmin.php'\">Volver</button>";
