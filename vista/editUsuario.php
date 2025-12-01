@@ -1,9 +1,12 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
+    include_once "../entidades/User.php";
     if ($_SESSION["datos"]["rol"] !== "Admin") {
         header("Location: ../index.php");
         exit();
     }
+    $user = new User();
+    $usersNicknames = $user -> getNicknames();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -26,15 +29,25 @@
             class="bg-white shadow-xl rounded-lg px-8 pt-6 pb-8 mb-4"
         >
 
-            <div class="mb-4">
-                <label for="id" class="block text-gray-700 text-sm font-bold mb-2">ID del usuario a cambiar</label>
-                <input 
-                    name="id" 
-                    type="number" 
+            <div class="mb-6">
+                <label for="selectNickname" class="block text-gray-700 text-sm font-bold mb-2">Seleccione un usuario</label>
+                
+                <select 
+                    name="oldNickname"
                     required
-                    placeholder="Escribe el ID (Ej: 5)"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
+                    <option value="" disabled selected>Seleccionar usuario</option>
+                    <?php
+                        if (!empty($usersNicknames)) {
+                            foreach ($usersNicknames as $nick) {
+                                echo "<option value=\"{$nick}\" >{$nick}</option>";
+                            }
+                        } else {
+                            echo "<option value=\"\" disabled>No hay usuarios para mostrar</option>";
+                        }
+                    ?>
+                </select>
             </div>
 
             <div class="mb-4">
@@ -71,23 +84,12 @@
             </div>
 
             <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Nickname</label>
+                <label for="nickname" class="block text-gray-700 text-sm font-bold mb-2">Nickname</label>
                 <input 
                     name="nickname" 
                     type="nickname" 
                     required
                     placeholder="Nuevo nickname"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-            </div>
-
-            <div class="mb-6">
-                <label for="rol" class="block text-gray-700 text-sm font-bold mb-2">Rol</label>
-                <input 
-                    name="rol" 
-                    type="text" 
-                    required
-                    placeholder="Nuevo rol (Admin/usuario)"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
             </div>

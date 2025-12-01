@@ -96,10 +96,10 @@ class User {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function update($id, $password, $nombre, $apellido, $nickname, $rol) {
-        $sql = "UPDATE usuarios SET password = :password, nombre = :nombre, apellido = :apellido, nickname = :nickname, rol = :rol WHERE id = :id";
+    public function update($id, $password, $nombre, $apellido, $nickname) {
+        $sql = "UPDATE usuarios SET password = :password, nombre = :nombre, apellido = :apellido, nickname = :nickname WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([":password" => $password, ":nombre" => $nombre, ":apellido" => $apellido, ":nickname" => $nickname, ":rol" => $rol , ':id' => $id]);
+        $stmt->execute([":password" => $password, ":nombre" => $nombre, ":apellido" => $apellido, ":nickname" => $nickname, ':id' => $id]);
     }
 
     public function delete($id) {
