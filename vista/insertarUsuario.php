@@ -73,13 +73,18 @@
 
             <div class="mb-6">
                 <label for="rol" class="block text-gray-700 text-sm font-bold mb-2">Rol</label>
-                <input 
+
+                <select 
                     name="rol" 
                     type="text" 
                     required
                     placeholder="Admin o usuario"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" 
                 >
+                    <option value="usuario" >usuario</option>
+                    <option value="Admin" >Admin</option>
+                </select>
+                
             </div>
 
             <div class="flex items-center justify-center mb-4">
