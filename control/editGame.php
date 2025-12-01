@@ -6,7 +6,14 @@ if ($_SESSION["datos"]["rol"] !== "Admin") {
         exit();
     }
 $juego = new Juego();
-$juego->update($_POST["id"], $_POST["nombre"], $_POST["descripcion"], $_POST["thumbnail"], $_POST["plataforma"]);
+
+$nomb = $_POST["oldName"];
+
+$getId = $juego -> getID($nomb);
+$id = $getId["id"];
+
+
+$juego->update($id, $_POST["nombre"], $_POST["descripcion"], $_POST["thumbnail"], $_POST["plataforma"]);
 
 ?>
 <!DOCTYPE html>

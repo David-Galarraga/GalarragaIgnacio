@@ -1,9 +1,12 @@
 <?php
     include_once "../middleWork/controlarSesiones.php";
+    include_once "../entidades/Juegos.php";
     if ($_SESSION["datos"]["rol"] !== "Admin") {
         header("Location: ../index.php");
         exit();
     }
+    $juego = new Juego();
+    $juegosNombres = $juego -> getNames();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,27 +26,36 @@
         <form method="post" action="../control/editGame.php" class="bg-white shadow-xl rounded-lg px-8 pt-6 pb-8 mb-4">
             
             <div class="mb-4">
-                <label for="id" class="block text-gray-700 text-sm font-bold mb-2">Id del juego a cambiar</label> <br>
-                <input name="id" type="number" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"> <br>
+                <label for="oldName" class="block text-gray-700 text-sm font-bold mb-2">Seleccione un juego</label> <br>
+
+                <select name="oldName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <option disabled>Seleccionar</option>
+                    <?php
+                        foreach ($juegosNombres as $nomb) {
+                            $safe_nomb = htmlspecialchars($nomb);
+                            echo "<option value=\"{$safe_nomb}\" >{$safe_nomb}</option>";
+                        }
+                    ?>
+                </select> <br>
             </div>
 
             <div class="mb-4">
-                <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre</label> <br>
+                <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nuevo nombre</label> <br>
                 <input name="nombre" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"> <br>
             </div>
 
             <div class="mb-4">
-                <label for="descripcion" class="block text-gray-700 text-sm font-bold mb-2">Descripcion</label> <br>
+                <label for="descripcion" class="block text-gray-700 text-sm font-bold mb-2">Nueva descripcion</label> <br>
                 <input name="descripcion" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"> <br>
             </div>
 
             <div class="mb-4">
-                <label for="thumbnail" class="block text-gray-700 text-sm font-bold mb-2">Thumbnail</label> <br>
+                <label for="thumbnail" class="block text-gray-700 text-sm font-bold mb-2">Nuevo thumbnail</label> <br>
                 <input name="thumbnail" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"> <br>
             </div>
 
             <div class="mb-6">
-                <label for="plataforma" class="block text-gray-700 text-sm font-bold mb-2">Plataforma</label> <br>
+                <label for="plataforma" class="block text-gray-700 text-sm font-bold mb-2">Nueva plataforma/s</label> <br>
                 <input name="plataforma" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"> <br>
             </div>
 
